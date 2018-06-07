@@ -1,22 +1,29 @@
-import React from 'react';
+import React from 'react'
+import { stripIndent } from 'common-tags'
 
-exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  if (process.env.NODE_ENV === `production`) {
-    return setHeadComponents([
+exports.onRenderBody = ({setHeadComponents, setPreBodyComponents}, pluginOptions) => {
+  if (process.env.NODE_ENV === `production` || pluginOptions.includeInDevelopment) {
+    setHeadComponents([
       <script
-        key={`gatsby-plugin-facebook-pixel`}
+        key="plugin-vk-pixel"
         dangerouslySetInnerHTML={{
-          __html: `
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-  document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '${pluginOptions.pixelId}'); // Insert your pixel ID here.
-  fbq('track', 'PageView');
-      `,
+          __html: stripIndent`
+            !function(){var t=document.createElement("script");t.type="text/javascript",
+            t.async=!0,t.src="https://vk.com/js/api/openapi.js?154",t.onload=function()
+            {VK.Retargeting.Init("${pluginOptions.id}"),VK.Retargeting.Hit()},
+            document.head.appendChild(t)}();`,
         }}
       />,
-    ]);
+    ])
+
+    setPreBodyComponents([
+      <noscript
+        key="plugin-vk-pixel"
+        dangerouslySetInnerHTML={{
+          __html: stripIndent`
+            <img src="https://vk.com/rtrg?p=${pluginOptions.id}" style="position:fixed; left:-999px;" alt=""/>`,
+        }}
+      />,
+    ])
   }
-};
+}

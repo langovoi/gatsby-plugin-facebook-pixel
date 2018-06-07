@@ -1,14 +1,24 @@
 {
   "presets": [
-    ["env", {
-      "targets": {
-        "browsers": ["last 2 versions", "safari >= 7"]
+    [
+      "env",
+      {
+        "useBuiltIns": false,
+        "modules": "commonjs",
+        "targets": {
+          "node": 4,
+          "browsers": [
+            "last 4 versions",
+            "safari >= 7",
+            "ie >= 9"
+          ]
+        },
+        "loose": true
       }
-    }],
+    ],
     "react"
   ],
   "plugins": [
-    "transform-object-rest-spread",
-    "transform-flow-strip-types"
+    "babel-plugin-transform-object-rest-spread"
   ]
 }

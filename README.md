@@ -1,9 +1,10 @@
-# gatsby-plugin-facebook-pixel
+# gatsby-plugin-vk-pixel
 
-Easily add Facebook Pixel to your Gatsby site. At this time, 'ViewContent' event is triggered via onRouteUpdate.
+Easily add VK Pixel to your Gatsby site.
 
 ## Install
-`npm install --save gatsby-plugin-facebook-pixel`
+
+`npm install --save gatsby-plugin-vk-pixel`
 
 ## How to use
 
@@ -11,9 +12,13 @@ Easily add Facebook Pixel to your Gatsby site. At this time, 'ViewContent' event
 // In your gatsby-config.js
 plugins: [
   {
-    resolve: `gatsby-plugin-facebook-pixel`,
+    resolve: `gatsby-plugin-vk-pixel`,
     options: {
-      pixelId: 'pixel id here',
+      id: 'pixel id here',
+
+      // Include VK Pixel in development.
+      // Defaults to false meaning VK Pixel will only be loaded in production.
+      includeInDevelopment: false,
     },
   },
 ]
